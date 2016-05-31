@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../../libs/react.js"></script>
+    <script src="../../libs/react-dom.js"></script>
+    <script src="../../libs/browser.min.js"></script>
+  </head>
+  <body>
+<!-- 
+
+enent listener  事件绑定
+
+定义了2个组件   TestClickComponent 与 TestInputComponent
+
+定义了2个事件   handleClick changeHandler
+
+
+-->
+<div id="example"></div>
+<script type="text/babel">
+
+var TestClickComponent =React.createClass({
+  handleClick:function(event){
+
+    var tipE=React.findDOMNode(this.refs.tip);
+
+    if(tipE.style.display==="none"){
+
+      tipE.style.display="inline";
+
+    }else{
+      tipE.style.display="none";
+    }
+
+    event.stopPropgation();
+    event.preventDefault();
+  },
+  render:function(){
+    return(
+      <div>
+        <button onClick={this.handleClick}>显示/隐藏</button><span ref='tip'>测试点击</span>
+      </div>
+    )
+  }
+});
+
+var TestInputComponent =React.createClass({
+  getInitialState:function(){
+    return{
+      inputContent:''
+    }
+  },
+
+  changeHandler:function(event){
+
+    this.setState({
+      inputContent:event.target.value
+    })
+    event.stopPropgation();
+    event.preventDefault();
+
+  },
+  
+  render:function(){
+    return(
+      <div>
+        <input type="text" onChange={this.changeHandler} /><span>{this.state.inputContent}</span>
+      </div>
+    )
+  }
+});
+
+
+ReactDOM.render(
+    <div>
+      <TestClickComponent/>
+      <TestInputComponent/>
+    </div>,
+   document.getElementById('example')
+);
+
+</script>
+  </body>
+</html>

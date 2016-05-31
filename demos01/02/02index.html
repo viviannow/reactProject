@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../../libs/react.js"></script>
+    <script src="../../libs/react-dom.js"></script>
+    <script src="../../libs/browser.min.js"></script>
+  </head>
+  <body>
+      <!-- 
+React Components Lifecycle 组件的生命周期          相关视频网址 ： http://www.imooc.com/video/9820
+
+
+Mounted ：react components被render解析生成对应的DOM节点，并被插入浏览器DOM结构的一个过程。
+
+update：一个mounted被重新render的过程，state改变并影响DOM结构时才会重新渲染  setstate/setProp  => render
+
+Unmounted：一个mounted节点从DOM节点中移除的过程  销毁  并不太操作
+
+
+
+每一个状态React都封装了对应的hook函数  ： 
+
+will 将要
+
+did已经
+
+下面弹出的顺序 ： getInitialState =>will => did 
+
+初始化状态调用：
+style={{iopacity:this.state.opacity,fontSize:this.state.fontSize}}
+
+this.state :  当前的初始化状态
+
+getInitialState的修改 .setState
+
+
+props 组件调用方调用时用的 花心
+
+state 一般是不会变的，归属于当前的。专情  调用方法
+
+
+
+componentDidMount:function(){
+        alert('did');
+        
+        var _self = this;   this是当前的对象
+        window.setTimeout(function(){
+          this是全局变量
+          _self.setState({ 
+            opacity:0.5,
+            fontSize:'120px'
+          })
+        },1000)
+      }
+
+.bind(this) es5中才有的规范
+  componentDidMount:function(){
+       
+        window.setTimeout(function(){
+          this.setState({
+            opacity:0.5,
+            fontSize:'120px'
+          })
+        }.bind(this),1000)
+      }
+
+-->
+<div id="example"></div>
+<script type="text/babel">
+
+   var Hello = React.createClass({
+
+
+      getInitialState:function(){
+        alert('init');
+        return{
+          opacity:1.0,
+          fontSize:'99px'
+        }
+      },
+
+      render: function() {
+        return <div style={this.state}>Hello {this.props.name}</div>;
+      },
+
+      componentWillMount:function(){
+        alert('will');
+      },
+
+      componentDidMount:function(){
+        alert('did');
+
+        var _self = this;
+        window.setTimeout(function(){
+          _self.setState({
+            opacity:0.5,
+            fontSize:'120px'
+          })
+        },1000)
+      }
+
+
+
+
+   });
+
+
+   ReactDOM.render(
+     <Hello name="World"/>,
+     document.getElementById('example')
+   );
+
+</script>
+  </body>
+</html>
