@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../libs/react.js"></script>
+    <script src="../libs/react-dom.js"></script>
+    <script src="../libs/browser.min.js"></script>
+  </head>
+  <body>
+      <!-- 
+
+  相关视频网址 ： http://www.imooc.com/video/9819
+
+    官网：http://facebook.github.io/react/
+    jsfiddle :https://jsfiddle.net/reactjs/69z2wepo/ 
+
+
+    语法糖:
+    JSX  直接可以在js中写类html的标签
+    CoffeeScript
+    TypeScript
+    最终都要解析成js浏览器才可以解析。
+
+    定义组件 React.createClass()的render是个函数，返回值是
+    渲染组件 ReactDOM.render方法 参数 (组件，插入位置)
+
+
+
+    this.props.name 
+    this 当前实例话的组件
+    props属性的集合
+
+
+    样式   
+    style={{color:'red'}}  
+    style={styleObj}
+
+    js原生写法：document.getElementById('contain').style.paddingLeft = '44px'
+
+  render: function() {
+        var sstyle={
+        color:'red',
+        fontSize:'44px'
+       }
+style={sstyle}
+className=""
+     -->
+<div id="example"></div>
+<script type="text/babel">
+   var Hello = React.createClass({
+      render: function() {
+           var sstyle={
+              color:'red',
+              fontSize:'44px'
+           };
+          return <div className="yes"  style={{color:'black'}}  style={sstyle}>Hello {this.props.name} {this.props.title}</div>;
+        }
+   });
+
+
+   ReactDOM.render(
+     <Hello name="World" title="mr"/>,
+     document.getElementById('example')
+   );
+
+</script>
+  </body>
+</html>

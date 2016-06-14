@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../libs/react.js"></script>
+    <script src="../libs/react-dom.js"></script>
+    <script src="../libs/browser.min.js"></script>
+    <script src="../libs/jquery.min.js"></script>
+
+  </head>
+  <body>
+<!-- 
+
+React 组件的数据可以通过 componentDidMount 方法中的 Ajax 来获取，
+
+当从服务端获取数据库可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI。
+
+当使用异步加载数据时，在组件卸载前使用 componentWillUnmount 来取消未完成的请求。
+
+以下实例演示了获取 Github 用户最新 gist 共享描述:
+
+
+.bind(this) 在函数内部使用外部事先保存的 this 
+
+
+生命周期
+
+componentWillMount 组件出现前 就是dom还没有渲染到html文档里面
+
+componentDidMount 组件渲染完成 已经出现在dom文档里
+
+componentWillUnmount 组件卸载前使用
+
+ -->
+<div id="example"></div>
+<script type="text/babel">
+
+
+var UserGist = React.createClass({
+
+    getInitialState: function() {
+      return {
+        username: '',
+        lastGistUrl: ''
+      };
+    },
+
+    componentDidMount: function() {
+      this.serverRequest = $.get(this.props.source, function (result) {
+        var lastGist = result[0];
+        this.setState({
+          username: lastGist.owner.login,
+          lastGistUrl: lastGist.html_url
+        });
+      }.bind(this));
+    },
+
+    componentWillUnmount: function() {
+      this.serverRequest.abort();
+    },
+
+    render: function() {
+      return (
+        <div>
+          {this.state.username} 用户最新的 Gist 共享地址：
+          <a href={this.state.lastGistUrl}>{this.state.lastGistUrl}</a>
+        </div>
+      );
+    }
+
+  });
+
+
+
+  ReactDOM.render(
+    <UserGist source="https://api.github.com/users/octocat/gists" />,
+    document.getElementById('example')
+  );
+</script>
+<script>
+  /*
+  [
+  {
+    "url": "https://api.github.com/gists/9257657",
+    "forks_url": "https://api.github.com/gists/9257657/forks",
+    "commits_url": "https://api.github.com/gists/9257657/commits",
+    "id": "9257657",
+    "git_pull_url": "https://gist.github.com/9257657.git",
+    "git_push_url": "https://gist.github.com/9257657.git",
+    "html_url": "https://gist.github.com/9257657",
+    "files": {
+      ".gitignore": {
+        "filename": ".gitignore",
+        "type": "text/plain",
+        "language": null,
+        "raw_url": "https://gist.githubusercontent.com/octocat/9257657/raw/c91b435be351fcdff00f6f97f20824d0286b99ef/.gitignore",
+        "size": 443
+      }
+    },
+    "public": true,
+    "created_at": "2014-02-27T19:38:27Z",
+    "updated_at": "2016-06-14T07:17:22Z",
+    "description": "Some common .gitignore configurations",
+    "comments": 62,
+    "user": null,
+    "comments_url": "https://api.github.com/gists/9257657/comments",
+    "owner": {
+      "login": "octocat",
+      "id": 583231,
+      "avatar_url": "https://avatars.githubusercontent.com/u/583231?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/octocat",
+      "html_url": "https://github.com/octocat",
+      "followers_url": "https://api.github.com/users/octocat/followers",
+      "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+      "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+      "organizations_url": "https://api.github.com/users/octocat/orgs",
+      "repos_url": "https://api.github.com/users/octocat/repos",
+      "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/octocat/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "truncated": false
+  },
+  {
+    "url": "https://api.github.com/gists/1162032",
+    "forks_url": "https://api.github.com/gists/1162032/forks",
+    "commits_url": "https://api.github.com/gists/1162032/commits",
+    "id": "1162032",
+    "git_pull_url": "https://gist.github.com/1162032.git",
+    "git_push_url": "https://gist.github.com/1162032.git",
+    "html_url": "https://gist.github.com/1162032",
+    "files": {
+      "test.cs": {
+        "filename": "test.cs",
+        "type": "text/plain",
+        "language": "C#",
+        "raw_url": "https://gist.githubusercontent.com/octocat/1162032/raw/51eb1d630526c18d123b67637ffcc1e88fb3909b/test.cs",
+        "size": 77
+      }
+    },
+    "public": true,
+    "created_at": "2011-08-22T09:46:16Z",
+    "updated_at": "2015-09-26T21:28:07Z",
+    "description": null,
+    "comments": 0,
+    "user": null,
+    "comments_url": "https://api.github.com/gists/1162032/comments",
+    "owner": {
+      "login": "octocat",
+      "id": 583231,
+      "avatar_url": "https://avatars.githubusercontent.com/u/583231?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/octocat",
+      "html_url": "https://github.com/octocat",
+      "followers_url": "https://api.github.com/users/octocat/followers",
+      "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+      "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+      "organizations_url": "https://api.github.com/users/octocat/orgs",
+      "repos_url": "https://api.github.com/users/octocat/repos",
+      "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/octocat/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "truncated": false
+  }
+]
+   */
+</script>
+  </body>
+</html>

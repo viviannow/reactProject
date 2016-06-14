@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../libs/react.js"></script>
+    <script src="../libs/react-dom.js"></script>
+    <script src="../libs/browser.min.js"></script>
+  </head>
+  <body>
+
+<!-- 
+设置了输入框 input 值value = {this.state.data}。
+
+在输入框值发生变化时我们可以更新 state。
+
+我们可以使用 onChange 事件来监听 input 的变化，并修改 state。
+
+ event.target.value 目标的value数值
+
+ -->
+
+<div id="example"></div>
+
+<script type="text/babel">
+
+   var HelloMessage = React.createClass({
+  
+
+ // getInitialState 中返回的值将会作为数据的默认值
+    getInitialState: function() {
+      return {value: 'Hello Runoob!'};
+    },
+
+    handleChange: function(event) {
+      this.setState({value: event.target.value});
+    },
+
+    render: function() {
+      var value = this.state.value;
+      return <div>
+              <input type="text" value={value} onChange={this.handleChange} /> 
+              <h4>{value}</h4>
+             </div>;
+    }
+
+  });
+
+
+  ReactDOM.render(
+    <HelloMessage />,
+    document.getElementById('example')
+  );
+
+
+</script>
+  </body>
+</html>

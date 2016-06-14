@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../libs/react.js"></script>
+    <script src="../libs/react-dom.js"></script>
+    <script src="../libs/browser.min.js"></script>
+  </head>
+  <body>
+<!-- 
+
+可以通过 getDefaultProps() 方法为 props 设置默认值
+
+ -->
+<div id="example"></div>
+<script type="text/babel">
+
+  var HelloMessage = React.createClass({
+
+    getDefaultProps: function() {
+      return {
+        name: 'Runoob'
+      };
+    },
+
+    render: function() {
+      return <h1>Hello {this.props.name}</h1>;
+    }
+
+  });
+
+
+  ReactDOM.render(
+    <HelloMessage />,
+    document.getElementById('example')
+  );
+
+
+</script>
+  </body>
+</html>
